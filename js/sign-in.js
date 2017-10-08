@@ -45,7 +45,7 @@ var app = new Vue({
         	else{
         		let finResult = result2.join("，");
         		console.log(finResult);
-        		window.alert(finResult); 
+        		window.alert(finResult);
         	}
 
         })

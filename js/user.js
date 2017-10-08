@@ -14,6 +14,7 @@ var app = new Vue({
 		nickname:'',
 		selected:'',
 		api_url:'http://120.24.211.212:7777/v1/account',
+		user_id:0,
 
 },//数据结尾处
 
@@ -33,9 +34,10 @@ methods:{
 		this.education=this.alldata.education;
 		this.hiredate=this.alldata.hiredate;
         this.nickname=this.alldata.nickname;
+        this.user_id=this.alldata.id;
 		let id = "id" + "=";
-	let token = "token" + "=";
-	let that =this;
+		let token = "token" + "=";
+		let that =this;
     if (this.id.length > 4) {
     	return;
     }
@@ -81,13 +83,14 @@ methods:{
 		.then(function (response) {
 			console.log(JSON.stringify(response));
             window.alert(response.data.message);
-            that.fetchData();
+            window.location.href="users.html";
 		})
 		.catch(function (error) {
 			console.log(error);
 		});
 
 	},
+
 	deleteUser:function(event){
 		var that = this;
 		var url = 'http://120.24.211.212:7777/v1/account'+'/'+this.alldata.id;
