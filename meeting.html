@@ -19,6 +19,7 @@
   <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js" defer></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script type="text/javascript" src="js/meeting.js" defer></script>
+
   <!-- Demo page code -->
 
 
@@ -58,7 +59,7 @@
                       <ul class="dropdown-menu">
                         <li><a tabindex="-1" href="#">Settings</a></li>
                         <li class="divider"></li>
-                        <li><a tabindex="-1" href="sign-in.html">Logout</a></li>
+                        <li><a tabindex="-1" href="sign-in.html">退出</a></li>
                       </ul>
                     </li>
                     
@@ -90,14 +91,13 @@
                     <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="icon-dashboard"></i>生活圈管理</div>
                     <ul id="dashboard-menu" class="nav nav-list collapse in">
                       <li><a href="index.html">回到首页</a></li>
-                      <li ><a href="users.html">创建文章分类</a></li>
-                      <li ><a href="users.html">查看文章分类</a></li>      
+                      <li ><a href="article.html">文章分类管理</a></li>
                     </ul>
 
                     <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="icon-dashboard"></i>讨论区管理</div>
                     <ul id="dashboard-menu" class="nav nav-list collapse in">
-                      <li><a href="index.html">获取通知</a></li>
-                      <li ><a href="users.html">创建通知</a></li>
+                      <li><a href="index.html">回到首页</a></li>
+                      <li ><a href="users.html">通知管理</a></li>
                     </ul>
                   </div>
                 </div>
@@ -112,7 +112,7 @@
                      <table class="table">
                       <thead>
                         <tr>
-                          <th>会议编号</th>
+                          <th>会议id</th>
                           <th>会议名称</th>
                           <th>会议地点</th>
                           <th>开始时间</th>
@@ -122,13 +122,13 @@
  <!--     ********************数据的表格************************** -->
                       <tbody  v-for="(item, index) in alldata">
                       <tr>
-                        <td>{{index}}</td>
-                        <td>{{item.dept_name}}</td>
                         <td>{{item.id}}</td>
-                        <td>{{item.create_time}}</td>
+                        <td>{{item.title}}</td>
+                        <td>{{item.location}}</td>
+                        <td>{{item.start_time}}</td>
                         <td>
-                        <div style="display: inline-block;"  v-on:click="editDept(item.id)"><i class="icon-pencil"></i></div>
-                       <a href="#myModal" role="button" data-toggle="modal" v-on:click="index_now = item.id"><i class="icon-remove"></i></a>
+                        <div style="display: inline-block;"  v-on:click="editMeet(item.id)"><i class="icon-pencil"></i></div>
+                       <a href="#myModal" role="button" data-toggle="modal" v-on:click="deleteID = item.id"><i class="icon-remove"></i></a>
                         </td>
                       </tr>
                     </tbody>
@@ -153,11 +153,11 @@
                       <h3 id="myModalLabel">删除部门</h3>
                     </div>
                     <div class="modal-body">
-                      <p class="error-text"><i class="icon-warning-sign modal-icon"></i>你确定要删除这个部门吗?</p>
+                      <p class="error-text"><i class="icon-warning-sign modal-icon"></i>你确定要删除这个会议吗?</p>
                     </div>
                     <div class="modal-footer">
                       <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-                      <button class="btn btn-danger" data-dismiss="modal" v-on:click="deleteDept">删除</button>
+                      <button class="btn btn-danger" data-dismiss="modal" v-on:click="deleteMeet">删除</button>
                     </div>
                   </div>
 

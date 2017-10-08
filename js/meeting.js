@@ -1,94 +1,105 @@
 var app = new Vue({
 	el:".span9",
-	data:{
-		alldata:[],
-		index_now:-1,
-		edit_now:-1,
-	},
-	created: function () {
-		this.fetchData();
-	},
-	
-	methods:{
-		fetchData:function(){
-			var that =this;
-			//请求数据
-			axios.get('http://120.24.211.212:7777/v1/meeting')
-			.then(function (response) {
-	        //部门返回的数据
-	        result = JSON.stringify(response);
-	         console.log("返回的数据:"+result);
-	         console.log("所需要的数据模型:"+ JSON.stringify(response.data.data.data));
-	        that.alldata = response.data.data.data;
-	        console.log("查看赋值情况:"+ that.alldata[0].id);
+	data: {
+		api_url:'http://120.24.211.212:7777/v1/meeting',
+		id:'',
+		token:'',
+		alldata:'',
+		userId:-1,
+		deleteID:-1,
+		page:0,
+},//数据结尾处
 
-	    })
-			.catch(function (error) {
-				console.log("错误:"+error);
-			});
-		},
+created: function () {
+	this.fetchData();
+},
 
-		//添加部门
-		addData:function(){
+methods:{
+	fetchData:function(){
+		console.log("你好,这里是会议界面！");
+		//截取token 和 id;
+		let id = "id" + "=";
+		let token = "token" + "=";
+		var cookie = document.cookie.split(';');
+		let that =this;
+		for(var i=0; i<cookie.length; i++) 
+		{
+			var c = cookie[i].trim();
+			if (c.indexOf(id)==0){
+				that.id = c.substring(id.length,c.length);
+			}
+			if (c.indexOf(token)==0) {
+				that.token = c.substring(token.length,c.length);
+			}
+		}
+		console.log("获得的id"+that.id +"获得的token:"+that.token);
 
-			var that =this;
-			var add =  prompt("新部门的名称:","20");
-			console.log("add:"+add);
-         //添加数据
-         axios.post('http://120.24.211.212:7777/v1/dept',{
-         	dept_name:add,
-         })
-         .then(function(response){
-         	result = JSON.stringify(response);
-         	console.log(result);
-         	that.fetchData();
-         })
-         .catch(function (error) {
-         	console.log("错误:"+error);
-         });
-     },
+		var instance = axios.create({
+			timeout: 1000,
+			async:true,
+			crossDomain:true,
+			headers: {
+				'id': that.id,
+				'token':that.token,
+			},
+			params:{
+				page:that.page,
+			}
+		});
+		instance.get(that.api_url)
+		.then(function (response) {
+			console.log(JSON.stringify(response));
+			that.alldata = response.data.data.data;
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
 
-		//删除部门
-		deleteDept:function(event){
-			console.log(this.index_now);
-			let that = this;
-			var str = 'http://120.24.211.212:7777/v1/dept/' + this.index_now;
-			axios.delete(str)
-			.then(function(response){
-				result = JSON.stringify(response);
-				console.log(result);
-				that.fetchData();
+	},//获得数据的函数
+     addData:function(){
+	window.location.href="addMeet.html";
+      },
+	deleteMeet:function(event){
+		var that = this;
+		var url = that.api_url +'/' + this.deleteID;
+		console.log("删除的会议 ："+url);
+		console.log(that.id);
+		console.log(that.token);
+		var instance = axios.create({
+			timeout: 1000,
+			async:true,
+			crossDomain:true,
+			headers: {
+				'id': that.id,
+				'token':that.token,
+			},
+		});
 
-			})
-			.catch(function (error) {
-				console.log("错误:"+error);
-			});
-
-		},
-
-		//编辑部门
-		editDept:function(event){
-            console.log(event);
-			let that = this;
-			var edit =  prompt("修改部门的名称:","");
-			console.log(edit);
-			 var str = 'http://120.24.211.212:7777/v1/dept/' + event;
-			axios.put(str,{
-				dept_name:edit	
-			})
-			.then(function(response){
-				result = JSON.stringify(response);
-				console.log(result);
-				that.fetchData();
-
-			})
-			.catch(function (error) {
-				console.log("错误:"+error);
-			});
-		},
-
+		instance.delete(url)
+		.then(function (response) {
+			console.log(JSON.stringify("删除后获得的响应:"+response));
+			that.fetchData();
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
 
 
 	},
 
-})
+	//编辑部门
+	editMeet:function(event){
+
+		console.log(event);
+          // console.log("数据中的"+this.alldata[event].sex);
+          location.href="editMeet.html?meetId="+event;
+      },
+
+
+
+
+
+
+},//方法结尾
+
+})//此处结尾
