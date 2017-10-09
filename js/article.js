@@ -16,7 +16,10 @@ var app = new Vue({
 	
 
 	methods:{
-
+	printBox:function(row,index,tag){
+			let articleId = this.fvbyindex(row,index,tag);
+          location.href="editArticle.html?artId="+articleId;
+	},
 		fetchData:function(){
  			//请求数据
 			this.getCookie();
@@ -110,8 +113,12 @@ var app = new Vue({
 			else if(tag==3){
 				return this.alldata[inx].title;
 			}
+			else if(tag==4){
+				return this.alldata[inx].id;
+			}
 		}
 		
 	},
+
 
 })
