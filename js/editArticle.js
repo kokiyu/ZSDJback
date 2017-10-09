@@ -7,7 +7,7 @@ var app = new Vue({
 		token:'',
 		alldata:'',
 		deleteID:-1,
-		page:0,
+		page:1,
 },//数据结尾处
 
 created: function () {

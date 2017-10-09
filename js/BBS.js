@@ -1,13 +1,13 @@
 var app = new Vue({
 	el:".span9",
 	data: {
-		api_url:'http://120.24.211.212:7777/v1/meeting',
+		api_url:'http://120.24.211.212:7777/v1/bbs',
 		id:'',
 		token:'',
 		alldata:'',
 		userId:-1,
 		deleteID:-1,
-		page:1,
+		page:0,
 },//数据结尾处
 
 created: function () {
@@ -102,4 +102,4 @@ methods:{
 
 },//方法结尾
 
-})//此处结尾
+})//此处结尾4

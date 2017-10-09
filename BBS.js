@@ -1,7 +1,7 @@
 var app = new Vue({
 	el:".span9",
 	data: {
-		api_url:'http://120.24.211.212:7777/v1/meeting',
+		api_url:'http://120.24.211.212:7777/v1/bbs',
 		id:'',
 		token:'',
 		alldata:'',
@@ -43,7 +43,7 @@ methods:{
 				'token':that.token,
 			},
 			params:{
-				page:that.page,
+				page:1,
 			}
 		});
 		instance.get(that.api_url)
@@ -102,4 +102,4 @@ methods:{
 
 },//方法结尾
 
-})//此处结尾
+})//此处结尾4
