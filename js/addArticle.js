@@ -55,6 +55,7 @@ var app = new Vue({
 					console.log('ddddddddddddddd');
 				});
 			}
+			instance
 		},
 		deleteData:function(){
 			var url=this.article_api+'/'+this.alldata.id;

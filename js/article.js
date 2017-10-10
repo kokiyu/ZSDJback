@@ -13,34 +13,31 @@ var app = new Vue({
 	created: function () {
 		this.fetchData();
 	},
-	
-
 	methods:{
-
 		fetchData:function(){
  			//请求数据
-			this.getCookie();
-			this.axiosCreate({
-					'id': this.id,
-					'token':this.token,
-				})
-			.get(this.api_url)
-			.then(this.handleData)
-			.catch(function (error) {
-				console.log("错误:"+error);
-			});
-		},
-		handleData:function(response){
+ 			this.getCookie();
+ 			this.axiosCreate({
+ 				'id': this.id,
+ 				'token':this.token,
+ 			})
+ 			.get(this.api_url)
+ 			.then(this.handleData)
+ 			.catch(function (error) {
+ 				console.log("错误:"+error);
+ 			});
+ 		},
+ 		handleData:function(response){
 			//数据返回分类
 			console.log(JSON.stringify(response));
 			var rData=response.data;
 			if (rData.code==200) {
-	        	this.alldata = rData.data.data;
-	        	this.row=parseInt(this.alldata.length/3);
-	        	if (this.alldata.length%3!=0) {
-	        		this.row++;
-	        	}
-	        	console.log(this.row)
+				this.alldata = rData.data.data;
+				this.row=parseInt(this.alldata.length/3);
+				if (this.alldata.length%3!=0) {
+					this.row++;
+				}
+				console.log(this.row)
 			}
 			else {
 				alert(rData.message);
@@ -70,9 +67,9 @@ var app = new Vue({
 			let that = this;
 			var str = this.api_url+"/" + this.selectData.id;
 			this.axiosCreate({
-					'id': this.id,
-					'token':this.token,
-				})
+				'id': this.id,
+				'token':this.token,
+			})
 			.delete(str) 
 			.then(function(response){
 				console.log(JSON.stringify(response));
@@ -84,10 +81,10 @@ var app = new Vue({
 		},
 		//编辑部门
 		updateClick:function(event){
-         var selectArticle = JSON.stringify(event);
-         sessionStorage.setItem('selectArticle',selectArticle);
-         console.log(selectArticle);
-         location.href="addArticle.html";
+			var selectArticle = JSON.stringify(event);
+			sessionStorage.setItem('selectArticle',selectArticle);
+			console.log(selectArticle);
+			location.href="addArticle.html";
 		},
 		/*获取跨域请求实例*/
 		axiosCreate:function(headers){
@@ -98,20 +95,36 @@ var app = new Vue({
 				headers: headers
 			});
 		},
-		fvbyindex:function(row,index,tag){
-			console.log(row+":::"+index+":::"+tag);
-			row--;
-			var inx=row*3+index;
-			if (tag==1) {
-				return this.alldata[inx];
-			}else if(tag==2){
-				return this.alldata[inx].image;
-			}
-			else if(tag==3){
-				return this.alldata[inx].title;
-			}
-		}
-		
+		gotodo:function(){ 
+			// var param = new FormData();
+			// param.append('rand_num',1507551322);
+			// param.append('meeting_id',110);
+			// this.axiosCreate({
+			// 	'id': this.id,
+			// 	'token':this.token
+			// })
+			// .put("http://120.24.211.212:7777/v1/attend/110",param)
+			// .then(function(response){
+			// 	console.log(JSON.stringify(response) );
+			// 	alert(response.data.message);
+			// });
+
+			
+		},
+		// fvbyindex:function(row,index,tag){
+		// 	console.log(row+":::"+index+":::"+tag);
+		// 	row--;
+		// 	var inx=row*3+index;
+		// 	if (tag==1) {
+		// 		return this.alldata[inx];
+		// 	}else if(tag==2){
+		// 		return this.alldata[inx].image;
+		// 	}
+		// 	else if(tag==3){
+		// 		return this.alldata[inx].title;
+		// 	}
+		// },
+
 	},
 
 })
