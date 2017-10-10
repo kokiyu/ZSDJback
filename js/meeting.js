@@ -7,7 +7,9 @@ var app = new Vue({
 		alldata:'',
 		userId:-1,
 		deleteID:-1,
-		page:1,
+		current_page:1,
+		totalPage:[],
+		totalPage2:-1,
 },//数据结尾处
 
 created: function () {
@@ -31,6 +33,7 @@ methods:{
 			if (c.indexOf(token)==0) {
 				that.token = c.substring(token.length,c.length);
 			}
+			
 		}
 		console.log("获得的id"+that.id +"获得的token:"+that.token);
 
@@ -43,22 +46,33 @@ methods:{
 				'token':that.token,
 			},
 			params:{
-				page:that.page,
+				page:that.current_page,
 			}
 		});
+		that.totalPage = [];
 		instance.get(that.api_url)
 		.then(function (response) {
-			console.log(JSON.stringify(response));
+			// console.log(JSON.stringify(response));
 			that.alldata = response.data.data.data;
+			that.totalPage2  = response.data.data.pagination.total_page;
+			for (var i = 0; i <= that.totalPage2 - 1; i++) {
+				that.totalPage =  that.totalPage+i;
+			}
+
 		})
 		.catch(function (error) {
 			console.log(error);
 		});
 
+		 // for (var i = 0; i <= that.totalPage2 - 1; i++) {
+		 // 	console.log(tha.totalPage);
+   //              that.totalPage =  that.totalPage.push(i);
+   //               }
+
 	},//获得数据的函数
-     addData:function(){
-	window.location.href="addMeet.html";
-      },
+	addData:function(){
+		window.location.href="addMeet.html";
+	},
 	deleteMeet:function(event){
 		var that = this;
 		var url = that.api_url +'/' + this.deleteID;
@@ -95,7 +109,12 @@ methods:{
           location.href="editMeet.html?meetId="+event;
       },
 
+//编辑页数
+    pageChange:function(page){
+	    this.current_page = page;
 
+        this.fetchData();
+     },
 
 
 

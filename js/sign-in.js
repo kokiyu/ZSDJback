@@ -38,7 +38,9 @@ var app = new Vue({
 //              url = "index.html?token="+that.token; 
 // 　          　url += "&id=" + that.id;
        document.cookie="id="+that.id;
-       document.cookie="token="+that.token;    　    
+       document.cookie="token="+that.token; 
+       document.cookie="name="+that.userName;    　    
+   　    
      　location.href="index.html";
            
  	}

@@ -72,6 +72,7 @@ var app = new Vue({
 			}
 			let that = this;
 			var str = this.api_url+"/" + this.selectData.id;
+			this.selectData=null;
 			this.axiosCreate({
 					'id': this.id,
 					'token':this.token,
