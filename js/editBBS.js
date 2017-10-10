@@ -1,121 +1,21 @@
 var app = new Vue({
-    el:".span9",
+    el:".container-fluid",
     data: {
         title:'',
-        location:'',
-        start_time:'',
-        end_time:'',
-        describe:'',
-        dept_ids:'',
+        content:'',
+        create_user_name:'',
+        create_time:'',
         id:'',
         token:'',
-        api_url:'http://120.24.211.212:7777/v1/meeting',
-        alldata:'',
-        cardData:[],
-        meetId:'',
-        users:'',
+        api_url:'http://120.24.211.212:7777/v1/bbs',
         image:'images/upload.png',
-
+        alldata:'',
 
 },//数据结尾处
 created:function(){
     this.fetchData();
 },
-mounted:function(){
-    let that = this;
-    laydate.render({
-        elem: '#start-time'
-        ,type: 'datetime'
-        ,done: function(value, date){
-            that.start_time = value;
-        }
-    });
-    laydate.render({
-        elem: '#end_time'
-        ,type: 'datetime'
-        ,done: function(value, date){
-            that.end_time = value;
-        }
-    });
-},
-
 methods:{
-
-dakaData:function(){
-let that = this;
-//获得会议id
-var url=JSON.stringify(location.search);
-var url = location.search; //获取url中"?"符后的字串
-var theRequest = new Object();
-if (url.indexOf("?") != -1) {
-  var str = url.substr(1);
-  strs = str.split("&");
-  for(var i = 0; i < strs.length; i ++) {
-     theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
- }
-
-}
-console.log(theRequest.meetId);
-
-this.meetId = theRequest.meetId;
-var instance = axios.create({
-    timeout: 1000,
-    async:true,
-    crossDomain:true,
-    headers: {
-        'id': that.id,
-        'token':that.token,
-    },
-});
-instance.get('http://120.24.211.212:7777/v1/attend/'+theRequest.meetId)
- .then(function (response) {
-    console.log("打卡情况:"+JSON.stringify(response));
-        that.cardData = response.data.data.data;
-
-})
- .catch(function (error) {
-    console.log(error);
-});
-
-},
-
-cardPeople:function(){
-let that = this;
-var url=JSON.stringify(location.search);
-var url = location.search; //获取url中"?"符后的字串
-var theRequest = new Object();
-if (url.indexOf("?") != -1) {
-  var str = url.substr(1);
-  strs = str.split("&");
-  for(var i = 0; i < strs.length; i ++) {
-     theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
- }
-}
-
-var instance = axios.create({
-    timeout: 1000,
-    async:true,
-    crossDomain:true,
-    headers: {
-        'id': that.id,
-        'token':that.token,
-    },
-});
-
-instance.post('http://120.24.211.212:7777/v1/attend',{
- meeting_id:that.meetId,
- users:that.users,
-})
- .then(function (response) {
-    console.log("点名打卡人员:"+JSON.stringify(response));
-
-})
- .catch(function (error) {
-    console.log(error);
-});
-
-},
-
 
 fetchData:function(){
 //截取token 和 id;
@@ -166,20 +66,17 @@ instance.get(that.api_url+'/'+theRequest.meetId)
     console.log(JSON.stringify(response));
     that.alldata = response.data.data.data;
     that.title = that.alldata.title;
-    that.location = that.alldata.location;
-    that.start_time = that.alldata.start_time;
-    that.end_time = that.alldata.end_time;
-    that.describe = that.alldata.describe;
-    that.dept_ids = that.alldata.dept_ids;
-    if (that.alldata.image !="") {
-    that.image = that.alldata.image;
+    that.content = that.alldata.content;
+    that.create_time = that.alldata.create_time;
+    that.create_user_name = that.alldata.create_user_name;
+    if (that.alldata.image_url !="") {
+    that.image = that.alldata.image_url;
     }
 })
 .catch(function (error) {
     console.log(error);
 });
-    that.dakaData();
-},
+   },
 
 //编辑会议
 saveData:function(){
@@ -195,20 +92,15 @@ saveData:function(){
     });
     instance.put(that.api_url+'/'+that.meetId,{
         'title': that.title,
-        'location': that.location,
-        'start_time': that.start_time,
-        'end_time': that.end_time,
-        'describe': that.describe,
-        'dept_ids': that.dept_ids,
-         image:that.image,
-         'users':that.users,
+        'content': that.content,
+         'image_url':that.image,
     })
     .then(function (response) {
         console.log(JSON.stringify(response));
         console.log("message:"+response.data.message);
         if (response.data.message == "修改成功") {
             alert("修改成功！");
-            location.href = "meeting.html";
+            location.href = "BBS.html";
         }
     })
     .catch(function (error) {
@@ -217,9 +109,9 @@ saveData:function(){
 },
 
 
-deleteDept:function(){
+deleteData:function(){
     var that = this;
-    var url = that.api_url +'/' + this.meetId;
+    var url = that.api_url +'/' + this.alldata.id;
     console.log("删除的会议 ："+url);
     console.log(that.id);
     console.log(that.token);
@@ -236,6 +128,14 @@ deleteDept:function(){
     instance.delete(url)
     .then(function (response) {
         console.log(JSON.stringify("删除后获得的响应:"+response));
+        if (response.data.code !="200") {
+            alert(response.data.message);
+        }
+        else{
+            alert("删除成功");
+            location.href = "BBS.html";
+
+        }
     })
     .catch(function (error) {
         console.log(error);

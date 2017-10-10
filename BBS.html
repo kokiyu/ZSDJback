@@ -52,13 +52,11 @@
 
                     <li id="fat-menu" class="dropdown">
                       <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-user"></i> Jack Smith
+                        <i class="icon-user"></i> 管理员
                         <i class="icon-caret-down"></i>
                       </a>
 
                       <ul class="dropdown-menu">
-                        <li><a tabindex="-1" href="#">Settings</a></li>
-                        <li class="divider"></li>
                         <li><a tabindex="-1" href="sign-in.html">退出</a></li>
                       </ul>
                     </li>
@@ -103,18 +101,21 @@
                 </div>
                 <div class="span9">
                   <h1 class="page-title">BBS-通知管理</h1>
+
                   <div class="btn-toolbar">
+                          <a class="btn btn-primary" href="addBBS.html"><i class="icon-plus"></i>添加通知管理</a>
                     <div class="btn-group">
+
                     </div>
                   </div>
                   <div class="well">
                      <table class="table">
                       <thead>
                         <tr>
-                          <th>会议id</th>
-                          <th>会议名称</th>
-                          <th>会议地点</th>
-                          <th>开始时间</th>
+                          <th>信息id</th>
+                          <th>信息内容</th>
+                          <th>信息发布时间</th>
+                          <th>信息发布者</th>
                           <th style="width: 26px;"></th>
                         </tr>
                       </thead>
@@ -122,9 +123,10 @@
                       <tbody  v-for="(item, index) in alldata">
                       <tr>
                         <td>{{item.id}}</td>
-                        <td>{{item.title}}</td>
-                        <td>{{item.location}}</td>
-                        <td>{{item.start_time}}</td>
+                        <td>{{item.content}}</td>
+                        <td>{{item.create_time}}</td>
+                        <th>{{item.create_user_name}}</th>
+
                         <td>
                         <div style="display: inline-block;"  v-on:click="editMeet(item.id)"><i class="icon-pencil"></i></div>
                        <a href="#myModal" role="button" data-toggle="modal" v-on:click="deleteID = item.id"><i class="icon-remove"></i></a>
@@ -136,13 +138,8 @@
 
                   </div>
                   <div class="pagination">
-                    <ul>
-                      <li><a href="#">Prev</a></li>
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">4</a></li>
-                      <li><a href="#">Next</a></li>
+                     <ul v-for="(item, index) in totalPage">
+                      <li><a v-on:click="pageChange(index+1)">{{index+1}}</a></li>
                     </ul>
                   </div>
 

@@ -49,6 +49,11 @@ methods:{
 		instance.get(that.api_url)
 		.then(function (response) {
 			console.log(JSON.stringify(response));
+          if (response.data.code != "200") {
+          	alert(response.data.message);
+          	return;
+          }
+
 			that.alldata = response.data.data.data;
 			that.totalPage2  = response.data.data.pagination.total_page;
 			for (var i = 0; i <= that.totalPage2 - 1; i++) {

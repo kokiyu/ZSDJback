@@ -7,7 +7,10 @@ var app = new Vue({
 		alldata:'',
 		userId:-1,
 		deleteID:-1,
-		page:0,
+		page:1,
+	    current_page:1,
+		totalPage:[],
+		totalPage2:-1,
 },//数据结尾处
 
 created: function () {
@@ -16,7 +19,7 @@ created: function () {
 
 methods:{
 	fetchData:function(){
-		console.log("你好,这里是会议界面！");
+		console.log("你好,这里是BBS界面！");
 		//截取token 和 id;
 		let id = "id" + "=";
 		let token = "token" + "=";
@@ -33,6 +36,7 @@ methods:{
 			}
 		}
 		console.log("获得的id"+that.id +"获得的token:"+that.token);
+		that.totalPage = [];
 
 		var instance = axios.create({
 			timeout: 1000,
@@ -50,6 +54,11 @@ methods:{
 		.then(function (response) {
 			console.log(JSON.stringify(response));
 			that.alldata = response.data.data.data;
+				that.totalPage2  = response.data.data.pagination.total_page;
+			for (var i = 0; i <= that.totalPage2 - 1; i++) {
+				that.totalPage =  that.totalPage+i;
+			}
+
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -92,7 +101,7 @@ methods:{
 
 		console.log(event);
           // console.log("数据中的"+this.alldata[event].sex);
-          location.href="editMeet.html?meetId="+event;
+          location.href="editBBS.html?meetId="+event;
       },
 
 
