@@ -14,6 +14,8 @@ var app = new Vue({
         cardData:[],
         meetId:'',
         users:'',
+        image:'images/upload.png',
+
 
 },//数据结尾处
 created:function(){
@@ -128,7 +130,9 @@ instance.get(that.api_url+'/'+theRequest.meetId)
     that.end_time = that.alldata.end_time;
     that.describe = that.alldata.describe;
     that.dept_ids = that.alldata.dept_ids;
-
+    if (that.alldata.image !="") {
+    that.image = that.alldata.image;
+    }
 })
 .catch(function (error) {
     console.log(error);
@@ -155,6 +159,7 @@ saveData:function(){
         'end_time': that.end_time,
         'describe': that.describe,
         'dept_ids': that.dept_ids,
+        image:that.image,
     })
     .then(function (response) {
         console.log(JSON.stringify(response));
@@ -193,6 +198,41 @@ deleteDept:function(){
         console.log(error);
     });
 },
+  fileClick:function(){
+            document.getElementById('upload_file').click()
+        },
+        fileChange:function(el){
+            if (!el.target.files[0].size)
+                return;
+            var file= el.target.files[0];
+        //上传图片
+        this.uploadFile(file);
+    },
+    uploadFile:function(file){ 
+        let that=this;
+        //创建form对象
+        let files = new FormData();
+        //通过append向form对象添加数据
+        files.append('file',file,file.name);
+     var instance = axios.create({
+        timeout: 1000,
+        async:true,
+        crossDomain:true,
+        headers: {
+            'id': that.id,
+            'token':that.token,
+        },
+    });
+    axios.post('http://120.24.211.212:7777/v1/utils/file',files)
+    .then(function(response){
+            console.log(JSON.stringify(response) );
+            alert(response.data.message);
+            if (response.data.code==200) {
+                that.image=response.data.data.image_url;
+            }
+        });
+
+    },
 
 
 },//方法结尾

@@ -12,6 +12,7 @@
   <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-responsive.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
   <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/addImag.css">
 
   <script src="lib/jquery-1.8.1.min.js" type="text/javascript"></script>
   <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js" defer></script>
@@ -161,6 +162,13 @@
                          <textarea value="会议描述" rows="3" class="input-xlarge" v-model="describe">请在此输入会议简介</textarea>
                          <label>参会部门（请输入部门id，多个部门用,隔开，如1，2，3)</label>
                          <input type="text"  class="input-xlarge" v-model="dept_ids" >
+                           <label>参会人员（请输入参会人员id，多个人员用,隔开，如1，2，3)</label>
+                      <input type="text"  class="input-xlarge" v-model="users">
+                       <label>会议图片（只可上传一张）</label>     
+                        <div class="upload_warp_left" v-on:click="fileClick">
+                          <img :src="image">
+                         <input @change="fileChange($event)" type="file" id="upload_file"  style="display: none"/>
+                        </div>
 
                        </form>
                      </div>

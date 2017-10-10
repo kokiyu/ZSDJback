@@ -8,6 +8,9 @@ var app = new Vue({
 		alldata:'',
 		deleteID:-1,
 		page:1,
+		current_page:1,
+		totalPage:[],
+		totalPage2:-1,
 },//数据结尾处
 
 created: function () {
@@ -57,7 +60,7 @@ var url=JSON.stringify(location.search);
   		'token':that.token,
   	},
   	params:{
-  		page:that.page,
+  		page:that.current_page,
   		c_id:that.articleId,
   	}
   });
@@ -65,6 +68,10 @@ var url=JSON.stringify(location.search);
   .then(function (response) {
   	console.log(JSON.stringify(response));
   	that.alldata = response.data.data.data;
+  	that.totalPage2  = response.data.data.pagination.total_page;
+			for (var i = 0; i <= that.totalPage2 - 1; i++) {
+				that.totalPage =  that.totalPage+i;
+			}
   })
   .catch(function (error) {
   	console.log(error);

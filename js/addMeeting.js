@@ -10,6 +10,8 @@ var app = new Vue({
         id:'',
         token:'',
         api_url:'http://120.24.211.212:7777/v1/meeting',
+        users:'',
+        image:'images/upload.png',
 
 },//数据结尾处
 
@@ -68,7 +70,9 @@ methods:{
         dept_ids:that.dept_ids,
         location:that.location,
         start_time:that.start_time,
-        end_time:that.end_time
+        end_time:that.end_time,
+        image:that.image
+
     })
     .then(function (response) {
         console.log(JSON.stringify(response));
@@ -92,6 +96,41 @@ methods:{
     });
 
 },
+        fileClick:function(){
+            document.getElementById('upload_file').click()
+        },
+        fileChange:function(el){
+            if (!el.target.files[0].size)
+                return;
+            var file= el.target.files[0];
+        //上传图片
+        this.uploadFile(file);
+    },
+    uploadFile:function(file){ 
+        let that=this;
+        //创建form对象
+        let files = new FormData();
+        //通过append向form对象添加数据
+        files.append('file',file,file.name);
+     var instance = axios.create({
+        timeout: 1000,
+        async:true,
+        crossDomain:true,
+        headers: {
+            'id': that.id,
+            'token':that.token,
+        },
+    });
+    axios.post('http://120.24.211.212:7777/v1/utils/file',files)
+    .then(function(response){
+            console.log(JSON.stringify(response) );
+            alert(response.data.message);
+            if (response.data.code==200) {
+                that.image=response.data.data.image_url;
+            }
+        });
+
+    },
 
 },//方法结尾
 
