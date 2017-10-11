@@ -1,5 +1,5 @@
 var app = new Vue({
-    el:".container-fluid",
+    el:".span9",
     data: {
         title:'',
         content:'',
@@ -12,7 +12,7 @@ var app = new Vue({
         alldata:'',
 
 },//数据结尾处
-created:function(){
+mounted:function(){
     this.fetchData();
 },
 methods:{
@@ -63,7 +63,7 @@ var instance = axios.create({
 //获得会议信息
 instance.get(that.api_url+'/'+theRequest.meetId)
 .then(function (response) {
-    console.log(JSON.stringify(response));
+    console.log(JSON.stringify(response.data.data.data));
     that.alldata = response.data.data.data;
     that.title = that.alldata.title;
     that.content = that.alldata.content;
