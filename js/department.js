@@ -25,7 +25,14 @@ var app = new Vue({
 			})
 			.then(function (response) {
 	        //部门返回的数据
+          
+
+
 	        result = JSON.stringify(response);
+	        if (response.data.code != 200) {
+	        	alert(response.data.message);
+	        	return;
+	        }
 	        // console.log("返回的数据:"+result);
 	        // console.log("所需要的数据模型:"+ JSON.stringify(response.data.data.data));
 	        that.alldata = response.data.data.data;

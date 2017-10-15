@@ -41,7 +41,7 @@ var app = new Vue({
        document.cookie="token="+that.token; 
        document.cookie="name="+that.userName;    　    
    　    
-     　location.href="./index.html";
+     　location.href="./department.html";
            
  	}
         	else{

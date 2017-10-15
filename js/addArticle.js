@@ -46,13 +46,11 @@ var app = new Vue({
 				instance.put(url,this.alldata)
 				.then(this.handleData)
 				.catch(function (error) {
-					console.log('ddddddddddddddd');
 				});
 			}else{
 				instance.post(url,this.alldata)
 				.then(this.handleData)
 				.catch(function (error) {
-					console.log('ddddddddddddddd');
 				});
 			}
 		},

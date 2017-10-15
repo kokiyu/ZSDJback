@@ -108,6 +108,8 @@ instance.post('http://120.24.211.212:7777/v1/attend',{
 })
  .then(function (response) {
     console.log("点名打卡人员:"+JSON.stringify(response));
+    alert("修改成功");
+    that.dakaData();
 
 })
  .catch(function (error) {

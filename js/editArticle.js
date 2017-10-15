@@ -106,6 +106,11 @@ var url=JSON.stringify(location.search);
 			c_id:that.articleId,
 		})
 		.then(function (response) {
+			if (response.data.code != 200) {
+				alert(response.data.message;)
+			}
+			that.fetchData();
+
 			console.log(JSON.stringify(response.data.data.message));
 		})
 		.catch(function (error) {
