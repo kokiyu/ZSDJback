@@ -49,18 +49,34 @@ methods:{
 		instance.get(that.api_url)
 		.then(function (response) {
 			console.log(JSON.stringify(response));
-          if (response.data.code != "200") {
-          	alert(response.data.message);
-          	return;
-          }
-
-			that.alldata = response.data.data.data;
-			that.totalPage2  = response.data.data.pagination.total_page;
-			for (var i = 0; i <= that.totalPage2 - 1; i++) {
-				that.totalPage =  that.totalPage+i;
+			if (response.data.code != "200") {
+				alert(response.data.message);
+				return;
 			}
 
-		})
+			that.alldata = response.data.data.data;
+
+              for (var i = 0; i < that.alldata.length; i++) {
+              	if (that.alldata[i].role == "user") {
+              		that.alldata[i].role = "用户";
+              	}
+              	else if (that.alldata[i].role == "admin") {
+              		that.alldata[i].role = "管理员";
+              	}
+              	else if (that.alldata[i].role == "superadmin") {
+              		that.alldata[i].role = "超级管理员";
+              	}
+              	else{
+                       that.alldata[i].role = "未设置";
+              	}
+              }
+
+   that.totalPage2  = response.data.data.pagination.total_page;
+   for (var i = 0; i <= that.totalPage2 - 1; i++) {
+   	that.totalPage =  that.totalPage+i;
+   }
+
+})
 		.catch(function (error) {
 			console.log(error);
 		});
@@ -70,9 +86,9 @@ methods:{
 	deleteUser:function(event){
 		var that = this;
 		var url = that.api_url +'/' + this.deleteID;
-        console.log("删除de ："+url);
-        console.log(that.id);
-        console.log(that.token);
+		console.log("删除de ："+url);
+		console.log(that.id);
+		console.log(that.token);
 		var instance = axios.create({
 			timeout: 1000,
 			async:true,
@@ -86,7 +102,7 @@ methods:{
 		instance.delete(url)
 		.then(function (response) {
 			console.log(JSON.stringify("删除后获得的响应:"+response));
-            that.fetchData();
+			that.fetchData();
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -96,16 +112,16 @@ methods:{
 	},
 
 	//编辑部门
-		editUser:function(event){
-          
-          console.log(event);
-          // console.log("数据中的"+this.alldata[event].sex);
-         var selectUser = JSON.stringify(this.alldata[event]);
-         window.sessionStorage.setItem('selectUser',selectUser);
-         console.log(selectUser);
-         location.href="user.html";
+	editUser:function(event){
 
-		},
+		console.log(event);
+          // console.log("数据中的"+this.alldata[event].sex);
+          var selectUser = JSON.stringify(this.alldata[event]);
+          window.sessionStorage.setItem('selectUser',selectUser);
+          console.log(selectUser);
+          location.href="user.html";
+
+      },
 
 
 

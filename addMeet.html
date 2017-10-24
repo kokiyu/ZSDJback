@@ -38,6 +38,21 @@
     color: #fff;
     font-weight: bold;
   }
+
+  .list{width: 310px;margin-left: -25px;}
+  .list ul li{background-color:#4e4e4e; border:solid 1px #8a8a8a; border-bottom:0;}
+  .list ul li a{padding-left: 10px;color: #fff; font-size:12px; display: block; font-weight:bold; height:36px;line-height: 36px;position: relative;
+  }
+  .list ul li .inactive{ background:url(images/off.png) no-repeat 184px center;}
+  .list ul li .inactives{background:url(images/on.png) no-repeat 184px center;} 
+  .list ul li ul{display: none;}
+  .list ul li ul li { border-left:0; border-right:0; background-color:#6a6a6a; border-color:#8a8a8a;}
+  .list ul li ul li ul{display: block;}
+  .list ul li ul li a{ padding-left:20px;}
+  .list ul li ul li a:link,a:visited{text-decoration: none;}
+  .list ul li ul li ul li { background-color:#4e4e4e; border-color:#8a8a8a; }
+  .last{ background-color:#4e4e4e; border-color:#8a8a8a; }
+  .list ul li ul li ul li a{ color:#316a91; padding-left:30px;}
 </style>
 
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -86,97 +101,112 @@
 
             <div class="container-fluid">
 
- <div class="row-fluid">
-                <div class="span3">
-                  <div class="sidebar-nav">
-                    <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="icon-dashboard"></i>用户管理</div>
-                    <ul id="dashboard-menu" class="nav nav-list collapse in">
-                       
-                       <li ><a href="department.html">部门管理</a></li>      
-                      <li ><a href="users.html">用户列表</a></li>      
-                    </ul>
+             <div class="row-fluid">
+              <div class="span3">
+                <div class="sidebar-nav">
+                  <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="icon-dashboard"></i>用户管理</div>
+                  <ul id="dashboard-menu" class="nav nav-list collapse in">
 
-                    <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="icon-dashboard"></i>会议管理</div>
-                    <ul id="dashboard-menu" class="nav nav-list collapse in">
-                       
-                      <li ><a href="meeting.html">会议管理</a></li>
-                    </ul>
+                   <li ><a href="department.html">部门管理</a></li>      
+                   <li ><a href="users.html">用户列表</a></li>      
+                 </ul>
 
-                    <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="icon-dashboard"></i>生活圈管理</div>
-                    <ul id="dashboard-menu" class="nav nav-list collapse in">
-                       
-                      <li ><a href="article.html">生活圈管理</a></li>
-                    </ul>
+                 <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="icon-dashboard"></i>生活圈管理</div>
+                 <ul id="dashboard-menu" class="nav nav-list collapse in">
 
-                     <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="icon-dashboard"></i>讨论区管理</div>
-                    <ul id="dashboard-menu" class="nav nav-list collapse in">
-                       
-                      <li ><a href="BBS.html">BBS管理</a></li>
-                    </ul>
-                  </div>
+                  <li ><a href="meeting.html">生活圈管理</a></li>
+                </ul>
+
+                <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="icon-dashboard"></i>学习圈管理</div>
+                <ul id="dashboard-menu" class="nav nav-list collapse in">
+
+                  <li ><a href="article.html">学习圈管理</a></li>
+                </ul>
+
+                <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="icon-dashboard"></i>讨论区管理</div>
+                <ul id="dashboard-menu" class="nav nav-list collapse in">
+
+                  <li ><a href="BBS.html">讨论区管理</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="span9">
+              <h1 class="page-title">新建 会议</h1>
+              <div class="btn-toolbar">
+                <div class="btn btn-primary"  v-on:click="saveData"><i class="icon-save"></i> 保存</div>
+                <div class="btn-group">
                 </div>
-              <div class="span9">
-                <h1 class="page-title">新建 会议</h1>
-                <div class="btn-toolbar">
-                  <div class="btn btn-primary"  v-on:click="saveData"><i class="icon-save"></i> 保存</div>
-                  <div class="btn-group">
-                  </div>
-                </div>
-                <div class="well">
-                  <ul class="nav nav-tabs">
-                    <li class="active"><a href="#home" data-toggle="tab">详细</a></li>
-                     <li><a href="#profile" data-toggle="tab">会议打卡(必填)</a></li>
-                  </ul>
-<div id="myTabContent" class="tab-content">
-  <div class="tab-pane active in" id="home">
-    <!--                       /********************* 表格内部 **************************/-->  
-    <form id="tab">
+              </div>
+              <div class="well">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#home" data-toggle="tab">详细</a></li>
+                  <li><a href="#profile" data-toggle="tab">会议打卡(必填)</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                  <div class="tab-pane active in" id="home">
+                    <!--                       /********************* 表格内部 **************************/-->  
+                    <form id="tab">
 
-      <label>会议名称</label>
-      <input type="text"  class="input-xlarge" v-model="title">
-      <label>会议地点</label>
-      <input type="text"  class="input-xlarge" v-model="location">
-      <label>开始时间</label> 
-      <input type="text"  class="input-xlarge" v-model="start_time" id="start-time">
-      <label>结束时间</label>
-      <input type="text"  class="input-xlarge" v-model="end_time" id="end_time">
+                      <label>会议名称</label>
+                      <input type="text"  class="input-xlarge" v-model="title">
+                      <label>会议地点</label>
+                      <input type="text"  class="input-xlarge" v-model="location">
+                      <label>开始时间</label> 
+                      <input type="text"  class="input-xlarge" v-model="start_time" id="start-time">
+                      <label>结束时间</label>
+                      <input type="text"  class="input-xlarge" v-model="end_time" id="end_time">
 
 
-      <label>会议简介</label>
-      <textarea value="会议描述" rows="3" class="input-xlarge" v-model="describe">请在此输入会议简介</textarea>
-      <label>参会部门（请输入部门id，多个部门用,隔开，如1，2，3)</label>
-      <input type="text"  class="input-xlarge" v-model="dept_ids">
-      
-                       <label>会议图片（只可上传一张）</label>
-                       
-                        <div class="upload_warp_left" v-on:click="fileClick">
-                          <img :src="image">
-  
-                         <input @change="fileChange($event)" type="file" id="upload_file"  style="display: none"/>
-                        </div>
-    </form>
+                      <label>会议简介</label>
+                      <textarea value="会议描述" rows="3" class="input-xlarge" v-model="describe">请在此输入会议简介</textarea>
+                      <label>参会部门（请输入部门id，多个部门用,隔开，如1，2，3)</label>
+                      <input type="text"  class="input-xlarge" v-model="dept_ids">
+
+                      <label>会议图片（只可上传一张）</label>
+
+                      <div class="upload_warp_left" v-on:click="fileClick">
+                        <img :src="image">
+
+                        <input @change="fileChange($event)" type="file" id="upload_file"  style="display: none"/>
+                      </div>
+                    </form>
                       <!--                       /********************* 表格结束 **************************/
                       -->  
                     </div>
                     <div class="tab-pane fade" id="profile">
                       <form id="tab2">
-                         <label>参会人员（请输入参会人员id，多个人员用,隔开，如1，2，3)</label>
-                            <label>必填！否则用户看不到会议</label>
-                      <input type="text"  class="input-xlarge" v-model="users">
-                            <div>
-                          <button class="btn btn-primary" v-on:click="">保存</button>
-                        </div>
-                      </form>
+                       <label>参会人员（请输入参会人员id，多个人员用,隔开，如1，2，3)</label>
+                       <label>必填！否则用户看不到会议</label>
+                       <input type="text"  class="input-xlarge" v-model="users">
+
+                       <div class="list">
+                         <ul style="list-style: none;">
+                          <li v-for="(dept, index) in deptData">
+                            <a href="#" class="inactive active" v-on:click = "listChange(index)">{{dept.dept_name}}</a>
+                            <ul style="display: block;" v-if="number==index?true:false" >
+                             <li style="list-style: none;margin-left:-25px;" v-for="members in dept.members">
+                              <a v-if="members.length == 0" href="#" >空</a>
+                              <a  v-else href="#" v-on:click="addPeople(members.id)">{{members.nickname}}</a>  </li> 
+                           </ul>
+                         </li>
+                       </ul>
+                     </div>
+
+
+                     <div>
+                      <button class="btn btn-primary" v-on:click="">保存</button>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>
-            <footer>
-              <hr>
-              <p class="pull-right">中山党建后台管理系统 <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">火鸟网络传媒公司</a></p>
-              <p>&copy; 2017 <a href="#">技术支持</a></p>
-            </footer>
+          </div>
+        </div>
+        <footer>
+          <hr>
+          <p class="pull-right">中山党建后台管理系统 <a href="" title="网页模板" target="_blank">火鸟网络传媒公司</a></p>
+          <p>&copy; 2017 <a href="#">技术支持</a></p>
+        </footer>
 
 
     <!-- Le javascript

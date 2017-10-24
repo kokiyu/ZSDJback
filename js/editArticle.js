@@ -107,7 +107,7 @@ var url=JSON.stringify(location.search);
 		})
 		.then(function (response) {
 			if (response.data.code != 200) {
-				alert(response.data.message;)
+				alert(response.data.message);
 			}
 			that.fetchData();
 
